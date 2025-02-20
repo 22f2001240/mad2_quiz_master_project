@@ -31,6 +31,13 @@ class Subject(db.Model):
     description = db.Column(db.String)
     chapters = db.relationship("Chapter", backref = "subject", cascade = "all, delete", lazy = True)
 
+    def convert_to_json(self):
+        return{
+            "id" : self.id,
+            "name" : self.name,
+            "description" : self.description,
+        }
+
 class Chapter(db.Model):
     __tablename__ = 'chapter'
     id = db.Column(db.Integer, primary_key = True)
