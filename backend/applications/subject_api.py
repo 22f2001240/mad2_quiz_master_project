@@ -1,12 +1,10 @@
 from flask import current_app as app,request
 from flask_restful import Resource
-from datetime import datetime
-from flask_jwt_extended import create_access_token
-import re
 from .model import *
 from .home import *
 
 class SubjectAPI(Resource):
+    @jwt_required()
     def get(self):
         subjects = Subject.query.all() 
         subject_json = []
@@ -32,7 +30,7 @@ class SubjectAPI(Resource):
         db.session.commit()
         return {"message" : "Subject created successfully"},201
     
-    jwt_required()
+    @jwt_required()
     @role_required('admin')
     def put(self,subject_id):
         subject = Subject.query.get(subject_id)
@@ -44,7 +42,7 @@ class SubjectAPI(Resource):
         db.session.commit()
         return {"message" : "Subject updated successfully"}, 200
     
-    jwt_required()
+    @jwt_required()
     @role_required('admin')
     def delete(self,subject_id):
         subject = Subject.query.get(subject_id)
@@ -53,4 +51,22 @@ class SubjectAPI(Resource):
         db.session.delete(subject)
         db.session.commit()
         return {"message" : "Subject deleted successfully"}, 200
+    
+class OneSubject(Resource):
+    @jwt_required()
+    def get(self,subject_id):
+        subject = Subject.query.get(subject_id)
+        if not subject:
+            return {"message" : "Subject not found"},404
+        return subject.convert_to_json(),200
         
+class ChapterSubject(Resource):
+    @jwt_required()
+    def get(self,subject_id):
+        chapters = Chapter.query.filter_by(subject_id = subject_id).all()
+        if chapters ==[]:
+            return {'message': 'No chapters for thus subject!'}, 404
+        chapter_json = []
+        for chapter in chapters:
+            chapter_json.append(chapter.convert_to_json())
+        return chapter_json,200

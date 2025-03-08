@@ -6,6 +6,9 @@ from applications.model import *
 from applications.authentication_api import *
 from applications.home import *
 from applications.subject_api import *
+from applications.chapter_api import *
+from applications.quiz_api import *
+from applications.questions_api import *
 
 app = Flask(__name__)
 api = Api(app)
@@ -34,6 +37,17 @@ api.add_resource(HomeAPI,'/api/home')
 api.add_resource(LoginAPI,'/api/login')
 api.add_resource(SignupAPI,'/api/signup')
 api.add_resource(SubjectAPI,'/api/subject','/api/subject/<int:subject_id>')
+api.add_resource(OneSubject,'/api/subject/get/<int:subject_id>')
+api.add_resource(ChapterSubject,'/api/subject/chapters/<int:subject_id>')
+api.add_resource(ChapterAPI,'/api/chapter', '/api/chapter/crud/<int:chapter_id>')
+api.add_resource(OneChapter,'/api/chapter/one/<int:chapter_id>')
+api.add_resource(QuizAPI,'/api/quiz', '/api/quiz/<int:quiz_id>')
+api.add_resource(OneQuizAPI,'/api/quiz/one/<int:chapter_id>')
+api.add_resource(SingleQuizAPI,'/api/single/quiz/<int:quiz_id>')
+api.add_resource(QuestionsAPI, '/api/question', '/api/question/<int:question_id>')
+api.add_resource(QuizQuestionsAPI, '/api/quiz/question/<int:quiz_id>')
+api.add_resource(SingleQuestionAPI,'/api/single/question/<int:question_id>')
+
 
 
 
