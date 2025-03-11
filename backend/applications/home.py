@@ -14,7 +14,6 @@ def role_required(required_role):
         def wrapper(*args, **kwargs):
             claims = get_jwt()
             user_role = claims.get("role")
-
             if user_role not in required_role:
                 return {"message" :"Unauthorized access!"}, 403
             return func(*args, **kwargs)

@@ -124,4 +124,18 @@ class Scores(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
     quiz_id = db.Column(db.Integer, db.ForeignKey("quiz.id"), nullable = False)
 
+    def convert_to_json(self):
+        return{
+            "id" : self.id,
+            "total_score" : self.total_score,
+            "submitted_at" : self.submitted_at.strftime('%d-%m-%Y %H:%M:%S'),
+            "total_attempted_questions" : self.total_attempted_questions,
+            "total_correct_answers" : self.total_correct_answers,
+            "total_wrong_answers" : self.total_wrong_answers,
+            "user_id" : self.user_id,
+            "user_name" : self.user.name,
+            "quiz_id" : self.quiz_id,
+            
+        }
+
 

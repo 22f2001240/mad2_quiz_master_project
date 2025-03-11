@@ -111,7 +111,8 @@ import AdminNavbar from './AdminNavbar.vue';
                     });
                     const result = await response.json();
                     if (!response.ok) {
-                        this.errorMessage = result.message
+                        alert(result.message)
+                        window.location.reload(); // Refresh the page
                     } else {
                         alert(result.message)
                         this.new_question = {

@@ -49,12 +49,12 @@
           }
           else {
             if(result.user_role == 'user'){
-              alert("UserLogin Successful")
-              localStorage.setItem("userToke",result.token)
-              this.$router.push("user-dashboard")
+              alert(result.message)
+              localStorage.setItem("userToken",result.token)
+              this.$router.push("/student-dashboard")
             } else {
               if(result.user_role == 'admin') {
-                alert("Admin Login Successful")
+                alert(result.message)
                 localStorage.setItem("adminToken", result.token)
                 this.$router.push("/admin-dashboard")
               } else {

@@ -9,11 +9,15 @@ import CreateChapter from '@/components/CreateChapter.vue'
 import UpdateChapter from '@/components/UpdateChapter.vue'
 import Chapter from '@/components/Chapter.vue'
 import CreateQuiz from '@/components/CreateQuiz.vue'
-import CreateQuestion from '@/components/CreateQuestion.vue'
 import Quiz from '@/components/Quiz.vue'
 import CreateQuestionQuiz from '@/components/CreateQuestionQuiz.vue'
 import UpdateQuestion from '@/components/UpdateQuestion.vue'
 import UpdateQuiz from '@/components/UpdateQuiz.vue'
+import StudentDashboard from '@/components/StudentDashboard.vue'
+import StudentSubject from '@/components/StudentSubject.vue'
+import StudentChapter from '@/components/StudentChapter.vue'
+import StudentQuiz from '@/components/StudentQuiz.vue'
+import StudentCompletedQuizzes from '@/components/StudentCompletedQuizzes.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,11 +73,6 @@ const router = createRouter({
       component : CreateQuiz
     },
     {
-      path : '/create-question/:chapter_id/:chapter_name/:quiz_id/:quiz_name',
-      name : 'create-question',
-      component : CreateQuestion
-    },
-    {
       path : '/quiz/:quiz_id',
       name : 'quiz',
       component : Quiz
@@ -92,6 +91,31 @@ const router = createRouter({
       path : '/update-quiz/:quiz_id',
       name : 'update-quiz',
       component : UpdateQuiz
+    },
+    {
+      path : '/student-dashboard',
+      name : 'student-dashboard',
+      component : StudentDashboard
+    },
+    {
+      path : '/student-subject/:subject_id',
+      name : 'student-subject',
+      component : StudentSubject
+    },
+    {
+      path : '/student-chapter/:chapter_id',
+      name : 'student-chapter',
+      component : StudentChapter
+    },
+    {
+      path : '/student-quiz/:quiz_id',
+      name : 'student-quiz',
+      component : StudentQuiz
+    },
+    {
+      path : '/student-completed-quizzes',
+      name : 'student-completed-quizzes',
+      component : StudentCompletedQuizzes
     }
   ],
 })

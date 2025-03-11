@@ -32,12 +32,10 @@
                             <p class="card-text">⏰{{ quiz.time_of_quiz }} (IST)</p>
                             <p class="card-text">⏳{{ quiz.time_duration }} Hours</p>
                             <p class="card-text">{{ quiz.num_questions }} Questions </p>
-                            <p v-if="quiz.num_questions < 10" class="card-text">⛔ Not fit for quiz.</p>
+                            <p v-if="quiz.num_questions < 5" class="card-text">⛔ Not fit for quiz.</p>
+                            <p v-else class="card-text">✅fit for quiz. </p>
                         </div>
                         <div class="card-footer d-flex justify-content-center gap-2">
-                            <!-- <router-link :to="'/create-question/'+chapter.id+'/'+chapter.name+'/'+quiz.id+'/'+quiz.name" type="submit"  >
-                                <button type="button" class="btn btn-dark">Add Question</button>
-                            </router-link> -->
                             <router-link :to="'/update-quiz/'+quiz.id" type="submit"  >
                                 <button type="button" class="btn btn-dark">Update</button>
                             </router-link>
