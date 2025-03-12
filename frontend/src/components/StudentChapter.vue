@@ -1,7 +1,7 @@
 <template>
     <div>
         <student-navbar/>
-        <!-- container for the chapter -->
+<!-- container for the chapter -->
         <div class="container">
             <h1 class="text-center">{{ chapter.name }}</h1><br>
             <div class="card">
@@ -17,12 +17,12 @@
             </div>
         </div>
 
-        <!-- container for quizzes -->
+<!-- container for quizzes -->
         <div class="container2">
             <h1 class="text-center">Quizzes</h1><br>
             <div class="row row-cols-1 row-cols-md-4 g-2 ">
-                <div v-for="quiz in filteredQuizzes" :key="quiz.id" class="col d-flex align-items-stretch ">
-                    <div class="card d-flex flex-column ">
+                <div v-for="quiz in filteredQuizzes" :key="quiz.id" class="col d-flex align-items-stretch " :class="{'disabled-card': isCompletedQuiz(quiz)}">
+                    <div v-if="isCompletedQuiz" class="card d-flex flex-column" >
                         <img class="card-img-top bottom-image" src="/assets/Quiz2.jpeg" alt="Quiz" >
                         <div class="card-body flex-grow-1" >
                             <h5 class="card-title">{{ quiz.name }}</h5>
@@ -34,7 +34,7 @@
                             <p v-if="isQuizTime(quiz)">🔥 Quiz is Live Now!</p>
                             <p v-else>⛔ Quiz not Available Now!</p>
                             <router-link :to="'/student-quiz/'+quiz.id" v-if="isQuizTime(quiz)">
-                                <button type="button" class="btn btn-primary">Start</button>
+                                <button type="button" class="btn btn-primary" >Start</button>
                             </router-link>
                             <button type="button" v-else class="btn btn-primary" disabled>Start</button>
                         </div>
@@ -64,9 +64,9 @@ export default {
     },
     methods : { 
         isQuizTime(quiz) {
-        const splittedDate = quiz.date_of_quiz.split("-"); // Convert the date from DD-MM-YYYY -> YYYY-MM-DD ["12", "03", "2025"]
+        const splittedDate = quiz.date_of_quiz.split("-"); // YYYY-MM-DD ["12", "03", "2025"]
         const convertedDate = `${splittedDate[2]}-${splittedDate[1]}-${splittedDate[0]}`; // 2025-03-12
-        const scheduledDateTimeString = `${convertedDate}T${quiz.time_of_quiz}`; // combine date and time "2025-03-12T10:15:00"
+        const scheduledDateTimeString = `${convertedDate}T${quiz.time_of_quiz}`; // "2025-03-12T10:15:00"
         const scheduledDateTime = new Date(scheduledDateTimeString);
         const currentDateTime = new Date();
         const timeDiff = Math.abs(scheduledDateTime - currentDateTime);
@@ -74,6 +74,14 @@ export default {
         return (
             timeDiff <= 60000
         );
+        },
+        isCompletedQuiz(quiz) {
+            const splittedDate = quiz.date_of_quiz.split("-");
+            const convertedDate = `${splittedDate[2]}-${splittedDate[1]}-${splittedDate[0]}`
+            const scheduledDateTimeString = `${convertedDate}T${quiz.time_of_quiz}`
+            const scheduledDateTime =new Date(scheduledDateTimeString)
+            const currentDateTime = new Date();
+            return ( scheduledDateTime < currentDateTime)
         },
         async fetchChapter() {
             try {
@@ -157,4 +165,9 @@ export default {
     text-align: center;
     font-size: 18px;
     }
+    .disabled-card {
+    pointer-events: none; 
+    opacity: 0.6;
+}
+
 </style>
