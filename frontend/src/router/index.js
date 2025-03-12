@@ -18,6 +18,8 @@ import StudentSubject from '@/components/StudentSubject.vue'
 import StudentChapter from '@/components/StudentChapter.vue'
 import StudentQuiz from '@/components/StudentQuiz.vue'
 import StudentCompletedQuizzes from '@/components/StudentCompletedQuizzes.vue'
+import StudentCompletedQuizDetailes from '@/components/StudentCompletedQuizDetailes.vue'
+import StudentAllQuizzes from '@/components/StudentAllQuizzes.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -116,6 +118,16 @@ const router = createRouter({
       path : '/student-completed-quizzes',
       name : 'student-completed-quizzes',
       component : StudentCompletedQuizzes
+    },
+    {
+      path : '/student-quiz-detailes/:quiz_id',
+      name : 'student-quiz-detailes',
+      component : StudentCompletedQuizDetailes
+    },
+    {
+      path : '/student-all-quizzes',
+      name : 'student-all-quizzes',
+      component : StudentAllQuizzes
     }
   ],
 })

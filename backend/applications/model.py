@@ -84,7 +84,8 @@ class Quiz(db.Model):
             "remarks" : self.remarks,
             "chapter_id" : self.chapter_id,
             "chapter_name" : self.chapter.name,
-            "num_questions" : len(self.questions)
+            "num_questions" : len(self.questions),
+            "subject_name" : self.chapter.subject.name
         }
 
 class Questions(db.Model):
@@ -135,7 +136,11 @@ class Scores(db.Model):
             "user_id" : self.user_id,
             "user_name" : self.user.name,
             "quiz_id" : self.quiz_id,
-            
+            "quiz_name" : self.quiz.name,
+            "chapter_name" : self.quiz.chapter.name,
+            "subject_name" : self.quiz.chapter.subject.name,
+            "num_questions" : len(self.quiz.questions),
+            "total_quiz_score" : sum(question.mark for question in self.quiz.questions)
         }
 
 

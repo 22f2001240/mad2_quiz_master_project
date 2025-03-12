@@ -1,5 +1,6 @@
 from flask import current_app as app,request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required,get_jwt_identity
 from datetime import datetime
 from .model import *
 from .home import *
@@ -107,6 +108,19 @@ class SingleQuizAPI(Resource):
             return {"message" : "Quiz doest not found "}, 404
         return quiz.convert_to_json(),200
 
-
+#get for fetching completed quizzes from student dashboad 
+class CompletedQuizessStudentAPI(Resource):
+    @jwt_required()
+    def get(self):
+        user_id = get_jwt_identity()
+        scores = Scores.query.filter_by(user_id=user_id)
+        if not scores:
+            return {"message" : "You are not yet participated in any quizzes"}
+        quiz_json = []
+        for score in scores:
+            quiz = Quiz.query.get(score.quiz_id)
+            quiz_json.append(quiz.convert_to_json())
+        return quiz_json
+            
 
 

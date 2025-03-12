@@ -8,15 +8,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link to="/admin-dashboard" class="nav-link active">Home</router-link>
+                        <router-link to="/student-dashboard" class="nav-link active">Home</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/student-completed-quizzes" class="nav-link">Completed Quizzes</router-link>
                     </li>
                     <li class="nav-item"> 
-                        <router-link to="/create-quiz" class="nav-link">Create new quiz</router-link>
+                        <router-link to="/student-all-quizzes" class="nav-link">All Upcoming Quizzes</router-link>
                     </li>
-                </ul>
+                </ul><br>
                 <button class="btn btn-outline-light me-2" @click="logout">Logout</button>
             </div>
         </div>
