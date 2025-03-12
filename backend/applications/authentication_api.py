@@ -17,8 +17,18 @@ class LoginAPI(Resource):
         if user:
             if not user.password == password:
                 return {"message" : "Incorrect Password"},401
+            
             access_token = create_access_token(identity = user.id, additional_claims = {"role": user.role })
+
+            user_activity = UserActivity.query.filter_by(email = user.email).first()
+            if user_activity:
+                user_activity.last_visited = datetime.now().date()
+            else :
+                new_user_activity = UserActivity(user_id = user.id,email = user.email,last_visited=datetime.now().date())
+                db.session.add(new_user_activity)
+            db.session.commit()
             return {"message" : "Login Successful !", "token" : access_token, "user_role" : user.role},200
+        
         return {"message" : "User not found. Please check your username and password "}
     
 class SignupAPI(Resource):

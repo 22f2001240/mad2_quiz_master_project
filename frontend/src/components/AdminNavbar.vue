@@ -14,9 +14,9 @@
                         <router-link to="/add-chapter" class="nav-link">Add new chapter</router-link>
                     </li>
                     <li class="nav-item"> 
-                        <router-link to="/create-quiz" class="nav-link">Create new quiz</router-link>
+                        <div @click="exportCSV" class="nav-link">Export CSV</div>
                     </li>
-                </ul>
+                </ul><br>
                 <button class="btn btn-outline-light me-2" @click="logout">Logout</button>
             </div>
         </div>
@@ -30,6 +30,25 @@ export default {
             localStorage.removeItem('adminToken')
             this.$router.push('/')
         },
+        async exportCSV() {
+            try {
+                const response = await fetch('/api/quiz/export',{
+                    method : 'GET',
+                    headers : {
+                        'Content-Type' : 'application/json',
+                        'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
+                    }
+                });
+                const result = await response.json()
+                if (!response.ok) {
+                    alert(result.message)
+                } else{
+                    alert(result.message)
+                }
+            } catch(error) {
+                console.log(error.message)
+            }
+        }
     }
 }
 </script>

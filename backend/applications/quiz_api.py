@@ -4,6 +4,7 @@ from flask_jwt_extended import jwt_required,get_jwt_identity
 from datetime import datetime
 from .model import *
 from .home import *
+from .task import notify_new_quiz,data_export
 
 class QuizAPI(Resource):
     @jwt_required()
@@ -39,6 +40,7 @@ class QuizAPI(Resource):
         new_quiz = Quiz(name = name, level=level, date_of_quiz = date_of_quiz, time_of_quiz = time_of_quiz, time_duration = time_duration, remarks = remarks, chapter_id = chapter_id)
         db.session.add(new_quiz)
         db.session.commit()
+        notify_new_quiz.delay(new_quiz.name)
         return {"message" : "New Quiz created successfully","quiz_id":new_quiz.id},201
     
     @jwt_required()
@@ -123,4 +125,12 @@ class CompletedQuizessStudentAPI(Resource):
         return quiz_json
             
 
-
+class ExportDataAPI(Resource):
+    @jwt_required()
+    def get(self):
+        quizzes = Quiz.query.all()
+        quiz_details = []
+        for quiz in quizzes:
+            quiz_details.append({'quiz_id':quiz.id, 'chapter_name':quiz.chapter.name, 'level':quiz.level, 'date_of_quiz':quiz.date_of_quiz, 'time_of_quiz':quiz.time_of_quiz, 'time_duration':quiz.time_duration,'reamrks':quiz.remarks})
+        data_export(quiz_details)
+        return {"message":"Data export task has been initiated, Please check your inbox"},200

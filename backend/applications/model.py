@@ -14,16 +14,26 @@ user_subject = db.Table(
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer,primary_key = True)
-    role = db.Column(db.String, nullable = False, default = 'user') #['admin', 'user]
+    role = db.Column(db.String, nullable = False, default = 'user') #['admin', 'user']
     email = db.Column(db.String, unique = True, nullable = False)
     password = db.Column(db.String(20), nullable = False)
     name = db.Column(db.String(20), nullable = False)
     qualification = db.Column(db.String(20), default = 'Beginner') #['Beginner', 'Intermediate', 'Advanced']
     dob = db.Column(db.Date)
     reminder_time = db.Column(db.Time, default = time(17, 0, 0)) #default time for sending reminders is 5 pm
+    user_activity = db.relationship("UserActivity", backref = "user", cascade = "all, delete", lazy = True)
     subjects = db.relationship("Subject", secondary = user_subject, backref = "users", lazy = True)
     scores = db.relationship("Scores", backref = "user", cascade = "all, delete", lazy = True)
+    student_answers = db.relationship("StudentAnswer", backref = "user", cascade = "all, delete", lazy = True)
 #add option to upload image in all users, subjects, chapters
+
+class UserActivity(db.Model):
+    __tablename__ = 'user_activity'
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer,db.ForeignKey("user.id"), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    last_visited = db.Column(db.Date, nullable=False)
+
 
 class Subject(db.Model):
     __tablename__ = 'subject'
@@ -99,6 +109,7 @@ class Questions(db.Model):
     correct_option = db.Column(db.String, nullable = False)
     mark = db.Column(db.Integer, nullable = False)
     quiz_id = db.Column(db.Integer, db.ForeignKey("quiz.id"), nullable = False)
+    student_answers = db.relationship("StudentAnswer", backref = "question", cascade = "all, delete", lazy = True)
 
     def convert_to_json(self):
         return{
@@ -124,6 +135,7 @@ class Scores(db.Model):
     total_wrong_answers = db.Column(db.Integer, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
     quiz_id = db.Column(db.Integer, db.ForeignKey("quiz.id"), nullable = False)
+    student_answers = db.relationship("StudentAnswer", backref = "score", cascade = "all, delete", lazy = True)
 
     def convert_to_json(self):
         return{
@@ -143,4 +155,11 @@ class Scores(db.Model):
             "total_quiz_score" : sum(question.mark for question in self.quiz.questions)
         }
 
+class StudentAnswer(db.Model):
+    __tablename__ = "student_answer"
+    id = db.Column(db.Integer, primary_key = True)
+    selected_option = db.Column(db.String(20))
+    question_id = db.Column(db.Integer, db.ForeignKey("questions.id"),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"),nullable=False)
+    score_id = db.Column(db.Integer, db.ForeignKey("scores.id"),nullable=False)
 

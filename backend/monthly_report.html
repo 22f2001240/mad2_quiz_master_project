@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weekly Order Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h2 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <h2>Hello {{ username }},</h2>
+    <p>Here is your order report for this week:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Serial No</th>
+                <th>Subject Name</th>
+                <th>Chapter Name</th>
+                <th>Quiz Name</th>
+                <th>Total Score Earned</th>
+                <th>Total Attempted Questions</th>
+                <th>Total Correct Answers</th>
+                <th>Total Wrong Answers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in data %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ score.subject_name }}</td>
+                <td>{{ score.chapter_name }}</td>
+                <td>{{ score.quiz_name }}</td>
+                <td>{{ score.total_score }}</td>
+                <td>{{ score.total_attempted_questions }}</td>
+                <td>{{ score.total_correct_answers }}</td>
+                <td>{{ score.total_wrong_answers }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Happy Learning </p>
+</body>
+</html>
+
+
