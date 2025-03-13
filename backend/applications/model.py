@@ -36,6 +36,7 @@ class User(db.Model):
             "num_of_attempts" : len([score.quiz.name for score in self.scores]),
             "attempted_quizzes" : [score.quiz.name for score in self.scores],
             "dob" : self.dob.isoformat(),
+            "subjects": [subject.name for subject in self.subjects]
         }
 
 class UserActivity(db.Model):

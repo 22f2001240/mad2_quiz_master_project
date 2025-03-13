@@ -14,12 +14,12 @@
                         <router-link to="/admin-dashboard" class="nav-link active">Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/add-chapter" class="nav-link">Add new chapter</router-link>
+                        <router-link to="/admin-summary" class="nav-link">Summary</router-link>
                     </li>
                     <li class="nav-item"> 
                         <div @click="exportCSV" class="nav-link">Export CSV</div>
                     </li>
-                </ul>
+                </ul><br>
                 <button class="btn btn-outline-light me-2" @click="logout">Logout</button>
             </div>
         </div>

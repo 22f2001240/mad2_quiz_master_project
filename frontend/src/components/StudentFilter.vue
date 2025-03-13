@@ -1,6 +1,6 @@
 <template>
     <div>
-        <admin-navbar/>
+        <student-navbar/>
         <div class="container">
             <div class="filter-container">
                 <span class="select-text">Select a category:</span>
@@ -67,9 +67,9 @@
 </template>
 
 <script>
-import AdminNavbar from './AdminNavbar.vue';
+import StudentNavbar from './StudentNavbar.vue';
 export default {
-    components : {AdminNavbar},
+    components : {StudentNavbar},
     data() {
         return {
             subjects : [],

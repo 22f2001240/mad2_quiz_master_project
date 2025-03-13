@@ -1,6 +1,6 @@
 <template>
     <div>
-        <admin-navbar/>
+        <student-navbar/>
         <div class="chart-container">
             <div class="chart-item bar-chart">
                 <h2 class="text-center">Subject Wise Top Scores</h2><br>
@@ -16,11 +16,11 @@
   
 <script>
 import { Chart, registerables } from 'chart.js';
-import AdminNavbar from './AdminNavbar.vue';
+import StudentNavbar from './StudentNavbar.vue';
   Chart.register(...registerables);
   
   export default {
-  components: { AdminNavbar },
+  components: { StudentNavbar },
     name: 'ChartComponent',
     data() {
       return {

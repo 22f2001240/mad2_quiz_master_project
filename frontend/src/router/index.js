@@ -22,6 +22,8 @@ import StudentCompletedQuizDetailes from '@/components/StudentCompletedQuizDetai
 import StudentAllQuizzes from '@/components/StudentAllQuizzes.vue'
 import AdminFilter from '@/components/AdminFilter.vue'
 import StudentFilter from '@/components/StudentFilter.vue'
+import AdminSummary from '@/components/AdminSummary.vue'
+import StudentSummery from '@/components/StudentSummery.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -140,6 +142,16 @@ const router = createRouter({
       path : '/student-filter',
       name : 'student-filter',
       component : StudentFilter
+    },
+    {
+      path : '/admin-summary',
+      name : 'admin-summary',
+      component : AdminSummary
+    },
+    {
+      path : '/student-summary',
+      name : 'student-summary',
+      component : StudentSummery
     }
   ],
 })

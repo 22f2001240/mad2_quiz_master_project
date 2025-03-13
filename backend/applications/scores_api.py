@@ -34,3 +34,51 @@ class ScoresAPI(Resource):
         cache.clear()
         return {"message" : "Your score recorded successfully"},201
     
+
+class SubjectTopScoreAPI(Resource):
+    @jwt_required()
+    def get(self):
+        # scores = Scores.query.all()
+        # if scores == []:
+        #     return {"message" : 'Nobody attempted any of the quizzes'}
+        # subject_top_score = {}
+        # for score in scores:
+        #     if score.quiz.chapter.subject.name not in subject_top_score:
+        #         subject_top_score[score.quiz.chapter.subject.name] = score.total_score
+        #     elif subject_top_score[score.quiz.chapter.subject.name] < score.total_score:
+        #         subject_top_score[score.quiz.chapter.subject.name] = score.total_score
+        # return subject_top_score,200
+        subjects = Subject.query.all()
+        sub_dict={}
+        i=1
+        for subject in subjects:
+            sub_dict[subject.name]=i
+            i+=1
+        return sub_dict,200
+        
+    
+class SubjectUserAttemptAPI(Resource):
+    @jwt_required()
+    def get(self):
+        # scores = Scores.query.all()
+        # if scores == []:
+        #     return {"message" : 'Nobody attempted any of the quizzes'}
+        # subject_user_attempt = {}
+        # for score in scores:
+        #     if score.quiz.chapter.subject.name not in subject_user_attempt:
+        #         subject_user_attempt[score.quiz.chapter.subject.name] = 1
+        #     elif subject_user_attempt[score.quiz.chapter.subject.name] < score.total_score:
+        #         subject_user_attempt[score.quiz.chapter.subject.name] += 1
+        # return subject_user_attempt,200
+        subjects = Subject.query.all()
+        sub_dict={}
+        i=1
+        for subject in subjects:
+            sub_dict[subject.name]=i
+            i+=1
+        return sub_dict,200
+
+# class LeaderBoardAPI(Resource):
+#     @jwt_required()
+#     def get(self):
+
