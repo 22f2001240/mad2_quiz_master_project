@@ -5,9 +5,11 @@ from datetime import datetime
 from .model import *
 from .home import *
 from .task import notify_new_quiz,data_export
+from main import cache
 
 class QuizAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self):
         quizzess = Quiz.query.all()
         quiz_json = []
@@ -41,6 +43,7 @@ class QuizAPI(Resource):
         db.session.add(new_quiz)
         db.session.commit()
         notify_new_quiz.delay(new_quiz.name)
+        cache.clear()
         return {"message" : "New Quiz created successfully","quiz_id":new_quiz.id},201
     
     @jwt_required()
@@ -79,6 +82,7 @@ class QuizAPI(Resource):
         quiz.remarks = data.get("remarks") if data.get("remarks") else quiz.remarks
         quiz.chapter_id = data.get("chapter_id") if data.get("chapter_id") else quiz.chapter_id
         db.session.commit()
+        cache.clear()
         return {"message" : "Quiz updated successfully"},200
     
     @jwt_required()
@@ -89,10 +93,12 @@ class QuizAPI(Resource):
             return {"message" : "Quiz doest not found"}, 404
         db.session.delete(quiz)
         db.session.commit()
+        cache.clear()
         return {"message" : "Requested quiz deleted succesfully"}, 200
 
 class OneQuizAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self,chapter_id):
         quizzes = Quiz.query.filter_by(chapter_id = chapter_id).all()
         if not quizzes:
@@ -104,6 +110,7 @@ class OneQuizAPI(Resource):
 
 class SingleQuizAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self,quiz_id):
         quiz = Quiz.query.get(quiz_id)
         if not quiz:
@@ -113,6 +120,7 @@ class SingleQuizAPI(Resource):
 #get for fetching completed quizzes from student dashboad 
 class CompletedQuizessStudentAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self):
         user_id = get_jwt_identity()
         scores = Scores.query.filter_by(user_id=user_id)
@@ -127,6 +135,7 @@ class CompletedQuizessStudentAPI(Resource):
 
 class ExportDataAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self):
         scores = Scores.query.all()
         quiz_details = []

@@ -4,9 +4,11 @@ from flask_jwt_extended import jwt_required,get_jwt_identity
 from datetime import datetime
 from .model import *
 from .home import *
+from main import cache
 
 class ScoresAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self):
         user_id = get_jwt_identity()
         scores = Scores.query.filter_by(user_id = user_id).all() 
@@ -30,5 +32,6 @@ class ScoresAPI(Resource):
         new_score = Scores(total_score=data.get("total_score"),total_attempted_questions=data.get("total_attempted_questions"),total_correct_answers=data.get("total_correct_answers"),total_wrong_answers=data.get("total_wrong_answers"),user_id=user_id,quiz_id=quiz_id)
         db.session.add(new_score)
         db.session.commit()
+        cache.clear()
         return {"message" : "Your score recorded successfully"},201
     

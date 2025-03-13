@@ -3,6 +3,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_caching import Cache
 from datetime import timedelta
+import time
 from applications.worker import celery
 from applications.task import *
 from applications.model import *
@@ -20,11 +21,9 @@ api = Api(app)
 jwt = JWTManager(app)
 cache=Cache()
 
-
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///quizMasterDB6"
 app.config["JWT_SECRET_KEY"] = "quizMaster123"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours = 12)
-#configure the caching for the flask
 app.config['CACHE_TYPE'] = 'redis'
 app.config['CACHE_REDIS_HOST'] = 'localhost'
 app.config['CACHE_REDIS_PORT'] = 6379
@@ -54,10 +53,12 @@ def add_admin():
         return "Admin added successfully"
     return "Admin is already in"
 
+#Test the working of cache
 @app.route('/test_cache')
 @cache.cached(timeout=20)
 def test_cache():
-    time.sleep(10) #first it will sleep for 10 seconds then return testing is working . and this return will wait for 20 seconds. within this 20 sec. it will keep the return result so wont sleep for 10 seconds for calls inbetween this
+    import time
+    time.sleep(10)
     return "testing is working"
 
 api.add_resource(HomeAPI,'/api/home')

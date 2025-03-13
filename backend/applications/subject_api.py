@@ -2,9 +2,11 @@ from flask import current_app as app,request
 from flask_restful import Resource
 from .model import *
 from .home import *
+from main import cache
 
 class SubjectAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self):
         subjects = Subject.query.all() 
         subject_json = []
@@ -28,6 +30,7 @@ class SubjectAPI(Resource):
         new_subject = Subject(name = name, description = description)
         db.session.add(new_subject)
         db.session.commit()
+        cache.clear()
         return {"message" : "Subject created successfully"},201
     
     @jwt_required()
@@ -40,6 +43,7 @@ class SubjectAPI(Resource):
         subject.name = data.get("name") if data.get("name") else subject.name
         subject.description = data.get("description") if data.get("description") else subject.description
         db.session.commit()
+        cache.clear()
         return {"message" : "Subject updated successfully"}, 200
     
     @jwt_required()
@@ -50,10 +54,12 @@ class SubjectAPI(Resource):
             return {"message" : "Subject not found"},404
         db.session.delete(subject)
         db.session.commit()
+        cache.clear()
         return {"message" : "Subject deleted successfully"}, 200
     
 class OneSubject(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self,subject_id):
         subject = Subject.query.get(subject_id)
         if not subject:
@@ -62,6 +68,7 @@ class OneSubject(Resource):
         
 class ChapterSubject(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self,subject_id):
         chapters = Chapter.query.filter_by(subject_id = subject_id).all()
         if chapters ==[]:

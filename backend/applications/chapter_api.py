@@ -2,9 +2,11 @@ from flask import current_app as app,request
 from flask_restful import Resource
 from .model import *
 from .home import *
+from main import cache
 
 class ChapterAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self):
         chapters = Chapter.query.all()
         if chapters ==[]:
@@ -33,6 +35,7 @@ class ChapterAPI(Resource):
         new_chapter = Chapter(name = name, description = description, subject_id=subject_id)
         db.session.add(new_chapter)
         db.session.commit()
+        cache.clear()
         return {"message" : "New Chapter added successfully"},201
     
     @jwt_required()
@@ -46,6 +49,7 @@ class ChapterAPI(Resource):
         chapter.description = data.get("description") if data.get("description") else chapter.description
         chapter.subject_id = data.get("subject_id") if data.get("subject_id") else chapter.subject_id
         db.session.commit()
+        cache.clear()
         return {"message" : "Chapter updated successfully"},200
     
     @jwt_required()
@@ -56,10 +60,12 @@ class ChapterAPI(Resource):
             return {"message" : "Chapter not found"}, 404
         db.session.delete(chapter)
         db.session.commit()
+        cache.clear()
         return {"message" : "Chapter deleted succesfully"}, 200
 
 class OneChapter(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self,chapter_id):
         chapter = Chapter.query.get(chapter_id)
         if not chapter:

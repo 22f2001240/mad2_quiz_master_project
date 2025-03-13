@@ -2,9 +2,11 @@ from flask import current_app as app,request
 from flask_restful import Resource
 from .model import *
 from .home import *
+from main import cache
 
 class QuestionsAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self):
         questions = Questions.query.all()
         questions_json = []
@@ -32,6 +34,7 @@ class QuestionsAPI(Resource):
         new_question = Questions(question = question, option_a = option_a, option_b = option_b,option_c = option_c, option_d = option_d, correct_option = correct_option, mark = mark, quiz_id = quiz_id)
         db.session.add(new_question)
         db.session.commit()
+        cache.clear()
         return {"message" : "New question created successfully"},201
     
     @jwt_required()
@@ -54,6 +57,7 @@ class QuestionsAPI(Resource):
         quest.mark = data.get("mark") if data.get("mark") else quest.mark
         quest.quiz_id = data.get("quiz_id") if data.get("quiz_id") else quest.quiz_id
         db.session.commit()
+        cache.clear()
         return {"message" : "Question updated successfully"},200
     
     @jwt_required()
@@ -64,10 +68,12 @@ class QuestionsAPI(Resource):
             return {"message" : "Question not found"}, 404
         db.session.delete(quest)
         db.session.commit()
+        cache.clear()
         return {"message" : "Question deleted succesfully"}, 200
     
 class QuizQuestionsAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self,quiz_id):
         questions = Questions.query.filter_by(quiz_id = quiz_id).all()
         if not questions:
@@ -79,6 +85,7 @@ class QuizQuestionsAPI(Resource):
     
 class SingleQuestionAPI(Resource):
     @jwt_required()
+    @cache.cached(timeout=120)
     def get(self,question_id):
         question = Questions.query.get(question_id)
         if not question:
