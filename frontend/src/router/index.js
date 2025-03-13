@@ -20,6 +20,8 @@ import StudentQuiz from '@/components/StudentQuiz.vue'
 import StudentCompletedQuizzes from '@/components/StudentCompletedQuizzes.vue'
 import StudentCompletedQuizDetailes from '@/components/StudentCompletedQuizDetailes.vue'
 import StudentAllQuizzes from '@/components/StudentAllQuizzes.vue'
+import AdminFilter from '@/components/AdminFilter.vue'
+import StudentFilter from '@/components/StudentFilter.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -128,6 +130,16 @@ const router = createRouter({
       path : '/student-all-quizzes',
       name : 'student-all-quizzes',
       component : StudentAllQuizzes
+    },
+    {
+      path : '/admin-filter',
+      name : 'admin-filter',
+      component : AdminFilter
+    },
+    {
+      path : '/student-filter',
+      name : 'student-filter',
+      component : StudentFilter
     }
   ],
 })

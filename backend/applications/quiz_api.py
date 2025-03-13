@@ -5,7 +5,6 @@ from datetime import datetime
 from .model import *
 from .home import *
 from .task import notify_new_quiz,data_export
-from main import cache
 
 class QuizAPI(Resource):
     @jwt_required()

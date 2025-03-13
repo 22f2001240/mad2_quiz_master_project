@@ -58,7 +58,7 @@
                 localStorage.setItem("adminToken", result.token)
                 this.$router.push("/admin-dashboard")
               } else {
-                alert("Sorry, You are not authorized to access this page!")
+                alert(result.message)
               }
             }
           }
@@ -79,6 +79,7 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    position: relative;
     justify-content: center; /* Centers horizontally */
     align-items: center; /* Centers vertically */
   }

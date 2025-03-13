@@ -2,7 +2,6 @@ from flask import current_app as app,request
 from flask_restful import Resource
 from .model import *
 from .home import *
-from main import cache
 
 class SubjectAPI(Resource):
     @jwt_required()

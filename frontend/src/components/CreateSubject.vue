@@ -15,6 +15,7 @@
                     </div><br>
                     <button type="submit" >Add</button>
                     <p class="text-danger mt-3" v-if="errorMessage" >{{ errorMessage }}</p>
+                    <button type="submit" @click="goBack" >Go Back</button>
                 </form>
             </div>
         </div>
@@ -62,6 +63,9 @@ import AdminNavbar from './AdminNavbar.vue'
                     alert(error.message)
                 }
             },
+            goBack() {
+                this.$router.push('/admin-dashboard')
+            }
         }
     }
 </script>

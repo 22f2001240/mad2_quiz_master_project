@@ -27,6 +27,17 @@ class User(db.Model):
     student_answers = db.relationship("StudentAnswer", backref = "user", cascade = "all, delete", lazy = True)
 #add option to upload image in all users, subjects, chapters
 
+    def convert_to_json(self):
+        return {
+            "id" : self.id,
+            "name" : self.name,
+            "email" : self.email,
+            "password" : self.password,
+            "num_of_attempts" : len([score.quiz.name for score in self.scores]),
+            "attempted_quizzes" : [score.quiz.name for score in self.scores],
+            "dob" : self.dob.isoformat(),
+        }
+
 class UserActivity(db.Model):
     __tablename__ = 'user_activity'
     id = db.Column(db.Integer, primary_key = True)

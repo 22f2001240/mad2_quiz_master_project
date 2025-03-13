@@ -4,7 +4,6 @@ from flask_jwt_extended import jwt_required,get_jwt_identity
 from datetime import datetime
 from .model import *
 from .home import *
-from main import cache
 
 class ScoresAPI(Resource):
     @jwt_required()

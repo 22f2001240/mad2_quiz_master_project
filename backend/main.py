@@ -14,12 +14,12 @@ from applications.chapter_api import *
 from applications.quiz_api import *
 from applications.questions_api import *
 from applications.scores_api import *
+from applications.user_api import *
 
 
 app = Flask(__name__)
 api = Api(app)
 jwt = JWTManager(app)
-cache=Cache()
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///quizMasterDB6"
 app.config["JWT_SECRET_KEY"] = "quizMaster123"
@@ -64,6 +64,7 @@ def test_cache():
 api.add_resource(HomeAPI,'/api/home')
 api.add_resource(LoginAPI,'/api/login')
 api.add_resource(SignupAPI,'/api/signup')
+api.add_resource(UserAPI,'/api/user')
 api.add_resource(SubjectAPI,'/api/subject','/api/subject/<int:subject_id>')
 api.add_resource(OneSubject,'/api/subject/get/<int:subject_id>')
 api.add_resource(ChapterSubject,'/api/subject/chapters/<int:subject_id>')
@@ -78,6 +79,7 @@ api.add_resource(QuestionsAPI, '/api/question', '/api/question/<int:question_id>
 api.add_resource(QuizQuestionsAPI, '/api/quiz/question/<int:quiz_id>')
 api.add_resource(SingleQuestionAPI,'/api/single/question/<int:question_id>')
 api.add_resource(ScoresAPI,'/api/scores','/api/scores/<int:quiz_id>','/api/quiz/submit/<int:quiz_id>')
+
 
 
 

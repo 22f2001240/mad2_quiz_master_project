@@ -1,7 +1,7 @@
 from flask import current_app as app,request
 from flask_restful import Resource
 from datetime import datetime
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token,jwt_required
 import re
 from .model import *
 
