@@ -11,11 +11,12 @@
             <div class="container4"> 
                 <div> {{ currentQuestion.question }} (MCQ)</div>
             </div>
-            <p> Choose an option:</p>
             <div class="container5">
                 <div v-for="(option, index) in currentOptions"
                     :key="index"
-                    :class="{ 'correct-option': option.label === currentQuestion.correct_option }"
+                    :class="{ 'correct-option': option.label === currentQuestion.correct_option,
+                              'wrong-option': option.label === selectedOption.selected_option && option.label !== currentQuestion.correct_option
+                        }"
                     class="option">
                     <strong>{{ option.Index }}. </strong>{{ option.text }}
                 </div><hr>
@@ -46,6 +47,7 @@ import StudentNavbar from './StudentNavbar.vue';
         return {
             questions: [],
             currentQuestionNumber: 0,
+            selected_options: [],
         };
     },
     computed: {
@@ -61,6 +63,9 @@ import StudentNavbar from './StudentNavbar.vue';
                 { Index:'D', label: "option_d", text: this.currentQuestion.option_d },
             ];
         },
+        selectedOption(){
+            return this.selected_options[this.currentQuestionNumber] || {}
+        }
     },
     methods: {
         async fetchQuestions() {
@@ -80,7 +85,25 @@ import StudentNavbar from './StudentNavbar.vue';
             }
             } catch (error) {
                 this.errorMessage = error.message;
-                this.loading = false;
+            }
+        },
+        async fetchSelectedOptions() {
+        try {
+            const response = await fetch(`/api/subject/answers/${this.$route.params.score_id}`,{
+                method: 'GET',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    'Authorization' : `Bearer ${localStorage.getItem('userToken')}`
+                }
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                alert(result.error)
+            } else {
+                this.selected_options = result;
+            }
+            } catch (error) {
+                this.errorMessage = error.message;
             }
         },
         PrevQuestion() {
@@ -101,6 +124,7 @@ import StudentNavbar from './StudentNavbar.vue';
     },
     mounted() {
         this.fetchQuestions();
+        this.fetchSelectedOptions();
     },
   };
   </script>
@@ -193,5 +217,9 @@ p {
 }
 .correct-option {
   background: #23a312;
+}
+.wrong-option {
+    background-color: #dd959b; /* Red */
+    color: #721c24;
 }
 </style>

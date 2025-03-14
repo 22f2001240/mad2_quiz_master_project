@@ -36,7 +36,8 @@ class User(db.Model):
             "num_of_attempts" : len([score.quiz.name for score in self.scores]),
             "attempted_quizzes" : [score.quiz.name for score in self.scores],
             "dob" : self.dob.isoformat(),
-            "subjects": [subject.name for subject in self.subjects]
+            "subjects": [subject.name for subject in self.subjects],
+            "reminder_time": self.reminder_time.isoformat()
         }
 
 class UserActivity(db.Model):
@@ -175,3 +176,9 @@ class StudentAnswer(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"),nullable=False)
     score_id = db.Column(db.Integer, db.ForeignKey("scores.id"),nullable=False)
 
+    def convert_to_json(self):
+        return{
+            "id" : self.id,
+            "selected_option" : self.selected_option,
+            "question_id" : self.question_id,
+        }

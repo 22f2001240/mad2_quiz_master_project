@@ -14,6 +14,9 @@
                             <router-link to="/student-dashboard" class="nav-link active">Home</router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link to="/student-profile" class="nav-link">Profile</router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link to="/student-completed-quizzes" class="nav-link">Completed Quizzes</router-link>
                         </li>
                         <li class="nav-item"> 

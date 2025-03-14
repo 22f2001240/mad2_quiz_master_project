@@ -143,3 +143,6 @@ class ExportDataAPI(Resource):
             quiz_details.append({'quiz_id':quiz.id, 'chapter_name':quiz.chapter.name, 'level':quiz.level, 'date_of_quiz':quiz.date_of_quiz, 'time_of_quiz':quiz.time_of_quiz, 'time_duration':quiz.time_duration,'reamrks':quiz.remarks})
         data_export(quiz_details)
         return {"message":"Data export task has been initiated, Please check your inbox"},200
+    
+
+

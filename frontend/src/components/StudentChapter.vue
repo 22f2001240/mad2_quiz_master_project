@@ -72,7 +72,7 @@ export default {
         const timeDiff = Math.abs(scheduledDateTime - currentDateTime);
         // Check if the quiz is happening within the 1 minute
         return (
-            timeDiff <= 60000
+            timeDiff <= 120000 
         );
         },
         isCompletedQuiz(quiz) {
@@ -80,8 +80,9 @@ export default {
             const convertedDate = `${splittedDate[2]}-${splittedDate[1]}-${splittedDate[0]}`
             const scheduledDateTimeString = `${convertedDate}T${quiz.time_of_quiz}`
             const scheduledDateTime =new Date(scheduledDateTimeString)
+            const cutoffTime = new Date(scheduledDateTime.getTime() + 10 * 60 * 1000); // Add 10 minutes to the scheduled time
             const currentDateTime = new Date();
-            return ( scheduledDateTime < currentDateTime)
+            return ( cutoffTime < currentDateTime)
         },
         async fetchChapter() {
             try {

@@ -15,6 +15,7 @@ from applications.quiz_api import *
 from applications.questions_api import *
 from applications.scores_api import *
 from applications.user_api import *
+from applications.student_answer_api import *
 
 
 app = Flask(__name__)
@@ -65,6 +66,7 @@ api.add_resource(HomeAPI,'/api/home')
 api.add_resource(LoginAPI,'/api/login')
 api.add_resource(SignupAPI,'/api/signup')
 api.add_resource(UserAPI,'/api/user')
+api.add_resource(SingleUserAPI,'/api/single-user')
 api.add_resource(SubjectAPI,'/api/subject','/api/subject/<int:subject_id>')
 api.add_resource(OneSubject,'/api/subject/get/<int:subject_id>')
 api.add_resource(ChapterSubject,'/api/subject/chapters/<int:subject_id>')
@@ -81,6 +83,9 @@ api.add_resource(SingleQuestionAPI,'/api/single/question/<int:question_id>')
 api.add_resource(ScoresAPI,'/api/scores','/api/scores/<int:quiz_id>','/api/quiz/submit/<int:quiz_id>')
 api.add_resource(SubjectTopScoreAPI,'/api/subject/top-score')
 api.add_resource(SubjectUserAttemptAPI,'/api/subject/user-attempt')
+api.add_resource(SubjectNumQuizzesAPI,'/api/subject/num-quizzes')
+api.add_resource(SubjectAttemptAPI,'/api/subject/attempt')
+api.add_resource(StudentAnswerAPI,'/api/subject/answers/<int:score_id>')
 
 
 

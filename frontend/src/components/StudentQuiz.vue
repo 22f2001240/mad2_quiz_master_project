@@ -111,6 +111,7 @@
                 total_score : 0,
                 total_attempted_questions : 0,
             },
+            question_ans : [],
             submitted : false,
             quiz_completed : false,
             
@@ -216,6 +217,12 @@
                 alert("Please select an option before proceeding.");
                 return;
             }
+
+            this.question_ans.push({
+                    question_id: this.currentQuestion.id,
+                    selected_option: this.selectedOption.label,
+                });
+
             const correctOptionLabel = this.currentQuestion.correct_option;
             const correctAnswerText = this.currentQuestion[correctOptionLabel];
             if (this.selectedOption.label === correctOptionLabel) {
@@ -248,23 +255,25 @@
 // Result page
         async submitQuiz() {
             try {
-            const response = await fetch(`/api/scores/${this.$route.params.quiz_id}`,{
-                method: 'POST',
-                headers : {
-                    'Content-Type' : 'application/json',
-                    'Authorization' : `Bearer ${localStorage.getItem('userToken')}`
-                },
-                body: JSON.stringify(this.new_score)
-            });
-            const result = await response.json();
-            if (!response.ok) {
-                alert(result.message)
-            } else {
-                alert(result.message);
-                this.submitted = true;
-            }
+        //fetch for submit the score
+                const response = await fetch(`/api/scores/${this.$route.params.quiz_id}`,{
+                    method: 'POST',
+                    headers : {
+                        'Content-Type' : 'application/json',
+                        'Authorization' : `Bearer ${localStorage.getItem('userToken')}`
+                    },
+                    body: JSON.stringify({scores : this.new_score,question_answers : this.question_ans})
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    alert(result.message)
+                } else {
+                    alert(result.message);
+                    this.submitted = true
+                    
+                }
             } catch (error) {
-            console.log(error.message);
+                console.log(error.message);
             }
         },
 

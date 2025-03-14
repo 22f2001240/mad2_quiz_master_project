@@ -68,7 +68,7 @@
                     </tr>
                 </tbody>
             </table>
-            <router-link :to="'/create-questions-quiz/'+quiz.id" type="button" class="btn btn-dark" >Add Question</router-link>
+            <router-link :to="'/create-questions-quiz/'+quiz.id" type="button" class="btn btn-dark " >Add Question</router-link>
         </div>
     </div>
 </template>

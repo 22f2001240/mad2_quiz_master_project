@@ -3,12 +3,14 @@
         <student-navbar/>
         <div class="chart-container">
             <div class="chart-item bar-chart">
-                <h2 class="text-center">Subject Wise Top Scores</h2><br>
-                <canvas ref="barChart"></canvas>
+                <h2 class="text-center">Subject Wise no. of  Quizzes</h2><br>
+                <p v-if="errorMessageBar" style="color: red;font-size: 20px;">{{ errorMessageBar }}</p>
+                <canvas v-else ref="barChart"></canvas>
             </div>
             <div class="chart-item pie-chart">
-                <h2 class="text-center">Subject Wise User Attempts</h2><br>
-                <canvas ref="pieChart"></canvas>
+                <h2 class="text-center">Subject Wise no. of  Quizzes Attempted</h2><br>
+                <p v-if="errorMessagePie" style="color: red;font-size: 20px;">{{ errorMessagePie }}</p>
+                <canvas v-else ref="pieChart"></canvas>
             </div>
         </div>
     </div>
@@ -24,6 +26,8 @@ import StudentNavbar from './StudentNavbar.vue';
     name: 'ChartComponent',
     data() {
       return {
+        errorMessageBar:'',
+        errorMessagePie:'',
         barChart: null,
         pieChart: null,
         sub_top_mark: {},
@@ -55,19 +59,21 @@ import StudentNavbar from './StudentNavbar.vue';
       };
     },
     methods: {
-      async fetchSubTopScores() {
+      async fetchSubQuizzes() {
         try {
-          const response = await fetch('/api/subject/top-score', {
+          const response = await fetch('/api/subject/num-quizzes', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+              'Authorization': `Bearer ${localStorage.getItem('userToken')}`
             }
           });
           const result = await response.json();
           if (!response.ok) {
-            alert(result.message);
+            this.errorMessageBar = result.message
+            // alert(result.message);
           } else {
+            this.errorMessageBar='',
             this.sub_top_mark = result;
             this.transformBarData();
             this.renderBarChart();
@@ -78,17 +84,19 @@ import StudentNavbar from './StudentNavbar.vue';
       },
       async fetchSubAttempts() {
         try {
-          const response = await fetch('/api/subject/user-attempt', {
+          const response = await fetch('/api/subject/attempt', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+              'Authorization': `Bearer ${localStorage.getItem('userToken')}`
             }
           });
           const result = await response.json();
           if (!response.ok) {
-            alert(result.message);
+            this.errorMessagePie = result.message
+            // alert(result.message)
           } else {
+            this.errorMessagePie = '';
             this.sub_attempts = result;
             this.transformPieData();
             this.renderPieChart();
@@ -144,7 +152,7 @@ import StudentNavbar from './StudentNavbar.vue';
       }
     },
     mounted() {
-      this.fetchSubTopScores();
+      this.fetchSubQuizzes();
       this.fetchSubAttempts();
     }
   };

@@ -20,7 +20,7 @@
                 <tbody>
                     <tr v-for="score in scores" :key="score.id">
                         <td>
-                            <router-link :to="'/student-quiz-detailes/'+score.quiz_id" class="remove-link"> {{ score.quiz_name }} </router-link>
+                            <router-link :to="'/student-quiz-detailes/'+score.quiz_id+'/'+score.id" class="remove-link"> {{ score.quiz_name }} </router-link>
                         </td>
                         <td scope="row">{{ score.subject_name }}</td>
                         <td>{{ score.chapter_name }}</td>

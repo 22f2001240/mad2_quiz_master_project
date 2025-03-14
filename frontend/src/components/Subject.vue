@@ -5,7 +5,7 @@
         <div class="container">
             <h1 class="text-center">{{ subject.name }}</h1><br>
             <div class="card">
-            <img class="card-img-top" :src="`/assets/${subject.name}.jpeg`" :alt="subject.name" @error="handleImageError">
+            <img class="card-img" :src="`/assets/${subject.name}.jpeg`" :alt="subject.name" @error="handleImageError">
             <div class="card-body">
                 <p class="card-text">{{ subject.description }}</p>
             </div>
@@ -25,7 +25,7 @@
                     <div class="card  d-flex flex-column">
                         <div class="card d-flex flex-column h-100">
                             <router-link :to="'/chapter/'+chapter.id">
-                                <img class="card-img-bottom" :src="'/assets/'+chapter.name+'.jpeg'" :alt="chapter.name" @error="handleImageError" >
+                                <img class="card-img" :src="'/assets/'+chapter.name+'.jpeg'" :alt="chapter.name" @error="handleImageError" >
                             </router-link><br>
                             <h5 class="card-title">{{ chapter.name }}</h5><hr>
                             <p class="card-text">{{ chapter.description }}</p>
@@ -153,15 +153,7 @@ import AdminNavbar from './AdminNavbar.vue'
     text-align: center;
     background-color: rgb(233, 238, 240);
     }
-    .card-img-top {
-    display: block;
-    margin: 20px auto;
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px;
-    }
-    .card-img-bottom{
+    .card-img{
         width: 100;
         height: 250px;
         object-fit: cover;

@@ -72,8 +72,10 @@ import AdminNavbar from './AdminNavbar.vue';
 </script>
 
 <style scoped>
-.mainContainer{
-    background: rgb(5, 33, 49);
+.mainContainer {
+    background: linear-gradient(to bottom, rgb(5, 33, 49) 60%, white 50%);
+    min-height: 100vh;
+    padding-bottom: 20px;
 }
 .container {
     background: rgb(136, 184, 199);

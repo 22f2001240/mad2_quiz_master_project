@@ -1,16 +1,18 @@
 <template>
     <div class="mainContainer">
         <admin-navbar/>
+
         <div v-if="quiz_added" class="add-question">
             <img src="/assets/add_question.jpeg"/><br>
-            <h2>Add Questions to {{ added_quiz_name }} now?</h2> <br>
-            <div class="d-flex gap-2">
-            <router-link :to="'/create-question/'+chapter_id+'/'+chapter_name+'/'+added_quiz_id+'/'+added_quiz_name">
-                <button type="submit" class="btn btn-warning">Yes</button>
+            <h2>Add More Quiz Modules ?</h2> <br>
+            <div class="d-flex gap-2"> 
+            <button type="submit" class="btn btn-warning" @click="addNow" >Add Now</button>
+            <router-link :to="'/chapter/'+chapter_id">
+                <button type="submit" class="btn btn-warning">Go Back</button>
             </router-link>
-            <button type="submit" class="btn btn-warning" @click="addLater" >Add Later</button>
             </div>
         </div>
+
         <div v-else class="container mt-4"> 
             <h2 class="text-center">Create New Quiz</h2>
             <form @submit.prevent="createNewQuiz">
@@ -111,7 +113,7 @@ export default {
                 console.log(error.message)
             }
         },
-        async addLater() {
+        async addNow() {
             this.quiz_added = false;
         }
     },

@@ -4,11 +4,13 @@
         <div class="chart-container">
             <div class="chart-item bar-chart">
                 <h2 class="text-center">Subject Wise Top Scores</h2><br>
-                <canvas ref="barChart"></canvas>
+                <p v-if="errorMessageBar" style="color: red;font-size: 20px;">{{ errorMessageBar }}</p>
+                <canvas v-else ref="barChart"></canvas>
             </div>
             <div class="chart-item pie-chart">
                 <h2 class="text-center">Subject Wise User Attempts</h2><br>
-                <canvas ref="pieChart"></canvas>
+                <p v-if="errorMessagePie" style="color: red;font-size: 20px;">{{ errorMessagePie }}</p>
+                <canvas v-else ref="pieChart"></canvas>
             </div>
         </div>
     </div>
@@ -24,6 +26,8 @@ import AdminNavbar from './AdminNavbar.vue';
     name: 'ChartComponent',
     data() {
       return {
+        errorMessageBar:'',
+        errorMessagePie:'',
         barChart: null,
         pieChart: null,
         sub_top_mark: {},
@@ -66,8 +70,9 @@ import AdminNavbar from './AdminNavbar.vue';
           });
           const result = await response.json();
           if (!response.ok) {
-            alert(result.message);
+            this.errorMessageBar = result.message
           } else {
+            this.errorMessageBar=''
             this.sub_top_mark = result;
             this.transformBarData();
             this.renderBarChart();
@@ -87,8 +92,9 @@ import AdminNavbar from './AdminNavbar.vue';
           });
           const result = await response.json();
           if (!response.ok) {
-            alert(result.message);
+            this.errorMessagePie = result.message
           } else {
+            this.errorMessagePie=''
             this.sub_attempts = result;
             this.transformPieData();
             this.renderPieChart();
