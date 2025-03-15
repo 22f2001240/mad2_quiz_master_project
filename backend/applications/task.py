@@ -58,6 +58,7 @@ def setup_periodic_tasks(sender, **kwargs):
 
     #execute on the first day of every month
     sender.add_periodic_task(
+        # crontab(minute="*", hour="*"),
         crontab(day_of_month='1',month_of_year='*'),
         monthly_report.s(),
         name='montly_report at list of every month'
@@ -75,6 +76,7 @@ def daily_reminder():
                 with open('daily_task.html','r') as f:
                     template = Template(f.read())
                     msg = template.render(username=user.name)
+                    print(f"mail send to {user.name} at {ist_now.strftime('%H:%M')}")
                     send_mail(email=user.email, email_content=msg, subject="Daily Reminder")
     print(f"✅ Sent reminders at {ist_now.strftime('%H:%M')} for users with matching preferred time")
 
@@ -110,7 +112,7 @@ def monthly_report():
 @celery.task
 def data_export(quiz_details):
     with open('data_export.csv','w',newline='') as csvfile:
-        fieldnames = ['quiz_id', 'chapter_name', 'level', 'date_of_quiz', 'time_of_quiz', 'time_duration', 'reamrks']
+        fieldnames = ['quiz_id', 'chapter_name', 'level', 'date_of_quiz', 'time_of_quiz', 'time_duration', 'remarks']
         writer = csv.DictWriter(csvfile,fieldnames=fieldnames)
 
         writer.writeheader()

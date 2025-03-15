@@ -67,6 +67,7 @@ import AdminNavbar from './AdminNavbar.vue';
                 }
             },
             async fetchChapter() {
+                this.errorMessage = ''
                 try {
                     const response = await fetch(`/api/chapter/one/${this.$route.params.chapter_id}`,{
                         method : 'GET',
@@ -128,10 +129,10 @@ import AdminNavbar from './AdminNavbar.vue';
     font-weight: bold;
     font-size: 25px;
 }
-  form label{
+form label{
     font-size: 18px;
   }
-  form input {
+form input {
     display: block;
     width: 100%;
     margin-bottom: 1rem;

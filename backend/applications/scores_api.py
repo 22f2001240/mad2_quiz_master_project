@@ -54,15 +54,7 @@ class SubjectTopScoreAPI(Resource):
                 subject_top_score[score.quiz.chapter.subject.name] = score.total_score
             elif subject_top_score[score.quiz.chapter.subject.name] < score.total_score:
                 subject_top_score[score.quiz.chapter.subject.name] = score.total_score
-        return subject_top_score,200
-        # subjects = Subject.query.all()
-        # sub_dict={}
-        # i=1
-        # for subject in subjects:
-        #     sub_dict[subject.name]=i
-        #     i+=1
-        # return sub_dict,200
-        
+        return subject_top_score,200   
     
 class SubjectUserAttemptAPI(Resource):
     @jwt_required()
@@ -77,31 +69,6 @@ class SubjectUserAttemptAPI(Resource):
             else:
                 subject_user_attempt[score.quiz.chapter.subject.name] += 1
         return subject_user_attempt,200
-        # subjects = Subject.query.all()
-        # sub_dict={}
-        # i=1
-        # for subject in subjects:
-        #     sub_dict[subject.name]=i
-        #     i+=1
-        # return sub_dict,200
-
-# class LeaderBoardAPI(Resource):
-#     @jwt_required()
-#     def get(self):
-#         scores = Scores.query.all()
-#         if scores == []:
-#             return {"message" : 'Nobody attempted any of the quizzes'},404
-#         quiz_topper=  {}
-#         for score in scores:
-#             if score.quiz.id not in quiz_topper:
-#                 quiz_topper[score.quiz.id]= score
-#             else:
-#                 if quiz_topper[score.quiz.id].total_score < score.total_score:
-#                     quiz_topper[score.quiz.id]= score
-#         quiz_topper_json = []
-
-#         return quiz_topper,200
-
 
 #For Student Summary
 class SubjectNumQuizzesAPI(Resource):
@@ -117,14 +84,6 @@ class SubjectNumQuizzesAPI(Resource):
             else : 
                 subject_quizzes[quiz.chapter.subject.name] += 1
         return subject_quizzes,200
-    
-    # subjects = Subject.query.all()
-        # sub_dict={}
-        # i=1
-        # for subject in subjects:
-        #     sub_dict[subject.name]=i
-        #     i+=1
-        # return sub_dict,200
 
 class SubjectAttemptAPI(Resource):
     @jwt_required()
@@ -140,10 +99,3 @@ class SubjectAttemptAPI(Resource):
             else:
                 subject_attempt[score.quiz.chapter.subject.name] += 1
         return subject_attempt,200
-        # subjects = Subject.query.all()
-        # sub_dict={}
-        # i=1
-        # for subject in subjects:
-        #     sub_dict[subject.name]=i
-        #     i+=1
-        # return sub_dict,200

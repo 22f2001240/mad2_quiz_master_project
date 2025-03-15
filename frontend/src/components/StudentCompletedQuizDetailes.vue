@@ -137,7 +137,7 @@ h2{
 }
 .maincontainer {
   position: relative; 
-  top: 100px;
+  top: 80px;
   left: 10px;
   right: 20px;
   bottom: 20px;
@@ -175,21 +175,21 @@ h2{
   font-weight: bold;
 }
 .container4 {
-  margin: 20px;
+  margin-left: 20px;
+  margin-right:50px;
   padding: 5px;
   background-color: #f0f0f0; /* Light gray background */
   border: 1px solid #ccc;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  width: 1025px ; 
   height: fit-content;
   font-size: 19px;
 }
 .container5 {
-  margin: 20px;
+  margin-left: 20px;
+  margin-right:50px;
   padding: 5px;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  width: 1025px ; 
   height: fit-content;
   font-size: 19px;
   border-radius: 5px;

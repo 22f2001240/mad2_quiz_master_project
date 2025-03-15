@@ -17,7 +17,7 @@
                         <router-link to="/admin-summary" class="nav-link">Summary</router-link>
                     </li>
                     <li class="nav-item"> 
-                        <div @click="exportCSV" class="nav-link">Export CSV</div>
+                        <div @click="exportCSV" class="nav-link custom-class">Export CSV</div>
                     </li>
                 </ul><br>
                 <button class="btn btn-outline-light me-2" @click="logout">Logout</button>
@@ -61,5 +61,10 @@ export default {
 .custom-link {
   text-decoration: none;
   color: inherit;
+  font-size: 24px;
+  
+}
+.custom-class {
+    cursor: pointer;
 }
 </style>

@@ -5,7 +5,7 @@
         <div class="container">
             <h1 class="text-center">{{ subject.name }}</h1><br>
             <div class="card">
-            <img class="card-img" :src="`/assets/${subject.name}.jpeg`" :alt="subject.name" @error="handleImageError">
+            <img class="card-img-top" :src="`/assets/${subject.name}.jpeg`" :alt="subject.name" @error="handleImageError">
             <div class="card-body">
                 <p class="card-text">{{ subject.description }}</p>
             </div>
@@ -20,12 +20,12 @@
 <!-- Container for chapters -->
         <div class="container2">
             <h1 class="text-center">Chapters of {{ subject.name }}</h1><br>
-            <div class="row row-cols-1 row-cols-md-4 g-2 ">
+            <div class="row row-cols-1 row-cols-md-5 g-2 ">
                 <div v-for="chapter in chapters" :key="chapter.id" class="col d-flex align-items-stretch">
                     <div class="card  d-flex flex-column">
                         <div class="card d-flex flex-column h-100">
                             <router-link :to="'/chapter/'+chapter.id">
-                                <img class="card-img" :src="'/assets/'+chapter.name+'.jpeg'" :alt="chapter.name" @error="handleImageError" >
+                                <img class="card-img-bottom" :src="'/assets/'+chapter.name+'.jpeg'" :alt="chapter.name" @error="handleImageError" >
                             </router-link><br>
                             <h5 class="card-title">{{ chapter.name }}</h5><hr>
                             <p class="card-text">{{ chapter.description }}</p>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-3 d-flex align-items-stretch ">
+                <div class="col-12 col-md-2 d-flex align-items-stretch ">
                     <div class="card h-100 w-100 d-flex flex-column new-card">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
                             <h5 class="card-title">Add New Chapter</h5><br>
@@ -153,7 +153,12 @@ import AdminNavbar from './AdminNavbar.vue'
     text-align: center;
     background-color: rgb(233, 238, 240);
     }
-    .card-img{
+    .card-img-top{
+        width: 100;
+        height: 250px;
+        object-fit: cover;
+    }
+    .card-img-bottom{
         width: 100;
         height: 250px;
         object-fit: cover;

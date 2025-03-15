@@ -13,6 +13,7 @@
                     <textarea type="text" class="form-control" id="description" v-model="product.description" :placeholder="product.description"> </textarea>
                 </div><br>
                 <button type="submit" >Update</button>
+                <button @click="goBack" type="submit" >Go Back</button>
             </form>
             <p class="text-danger mt-3" v-if="errorMessage" >{{ errorMessage }}</p>
         </div>
@@ -33,52 +34,55 @@ export default{
             }
         },
         methods : {
-        async updateSubject(){
-            const payload = {
-                name : this.product.name,
-                description : this.product.description
-            }
-            try {
-                const response = await fetch(`/api/subject/${this.$route.params.id}`,{
-                    method : 'PUT',
-                    headers : {
-                        'Content-Type' : 'application/json',
-                        'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
-                    },
-                    body : JSON.stringify(payload)
-                });
-                const result = await response.json()
-                if (!response.ok) {
-                    this.errorMessage = result.message
-                } else {
-                    alert(result.message)
-                    this.$router.push('/admin-dashboard')
+            goBack() {
+                this.$router.push('/admin-dashboard')
+            },
+            async updateSubject(){
+                this.errorMessage = ''
+                const payload = {
+                    name : this.product.name,
+                    description : this.product.description
                 }
-            } catch (error) {
-                console.log(error.message)
-            }
-        },
-        async fetchSubject() {
-            try {
-                const response = await fetch(`/api/subject/get/${this.$route.params.id}`,{
-                    method : 'GET',
-                    headers : {
-                        'Content-Type' : 'application/json',
-                        'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
-                    },
-                });
-                const result = await response.json()
-                if(!response.ok) {
-                    alert(result.error)
-                } else {
-                    this.product.name = result.name
-                    this.product.description = result.description
+                try {
+                    const response = await fetch(`/api/subject/${this.$route.params.id}`,{
+                        method : 'PUT',
+                        headers : {
+                            'Content-Type' : 'application/json',
+                            'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
+                        },
+                        body : JSON.stringify(payload)
+                    });
+                    const result = await response.json()
+                    if (!response.ok) {
+                        this.errorMessage = result.message
+                    } else {
+                        alert(result.message)
+                        this.$router.push('/admin-dashboard')
+                    }
+                } catch (error) {
+                    console.log(error.message)
                 }
-            } catch(error){
-                console.log(error.message)
-            }
-        },
-        
+            },
+            async fetchSubject() {
+                try {
+                    const response = await fetch(`/api/subject/get/${this.$route.params.id}`,{
+                        method : 'GET',
+                        headers : {
+                            'Content-Type' : 'application/json',
+                            'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
+                        },
+                    });
+                    const result = await response.json()
+                    if(!response.ok) {
+                        alert(result.error)
+                    } else {
+                        this.product.name = result.name
+                        this.product.description = result.description
+                    }
+                } catch(error){
+                    console.log(error.message)
+                }
+            },
     },
     mounted() {
         this.fetchSubject();

@@ -1,59 +1,62 @@
 <template>
-    <div class="mainContainer">
-        <AdminNavbar/>
-        <div v-if="question_added" class="add-question">
-            <img src="/assets/question_added.jpeg" /><br>
-            <h2>Add More Questions ?</h2><br>
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-warning" @click="addMore" >Add More</button>
-                <router-link :to="'/quiz/'+quiz.id">
-                    <button type="submit" class="btn btn-warning">Go Back</button>
-                </router-link>
+    <div>
+        <admin-navbar/>
+        <div class="mainContainer"> 
+            <div v-if="question_added" class="add-question">
+                <img src="/assets/question_added.jpeg" /><br>
+                <h2>Add More Questions ?</h2><br>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-warning" @click="addMore" >Add More</button>
+                    <router-link :to="'/quiz/'+quiz.id">
+                        <button type="submit" class="btn btn-warning">Go Back</button>
+                    </router-link>
+                </div>
             </div>
-        </div>
-        <div v-else class="container mt-4"> 
-            <h2 class="text-center">Add Question to {{ quiz.name }}({{ quiz.chapter_name }})</h2>
-            <form @submit.prevent="createNewQuestion">
-                <div class="form-group">
-                    <label for="question">Question</label>
-                    <textarea type="text" class="form-control" id="question" minlength="6" v-model="new_question.question" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="option_a">Option A</label>
-                    <textarea type="text" class="form-control" id="option_a" v-model="new_question.option_a" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="option_b">Option B</label>
-                    <textarea type="text" class="form-control" id="option_b" v-model="new_question.option_b" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="option_c">Option C</label>
-                    <textarea type="text" class="form-control" id="option_c" v-model="new_question.option_c" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="option_d">Option D</label>
-                    <textarea type="text" class="form-control" id="option_d" v-model="new_question.option_d" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="correct_option">Select correct option</label>
-                    <select id="correct_option" v-model="new_question.correct_option" class="form-select">
-                        <option value="option_a">Option A</option>
-                        <option value="option_b">Option B</option>
-                        <option value="option_c">Option C</option>
-                        <option value="option_d">Option D</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="mark">Mark for the question</label>
-                    <input type="number" class="form-control" min="1" id="mark" v-model="new_question.mark" required>
-                </div>
-                <div class="form-group">
-                    <label for="quiz_id">Quiz Name</label>
-                    <input type="text" class="form-control" id="quiz_id" :placeholder="quiz.name" v-model="quiz_name" disabled>
-                </div>
-                <button type="submit" class="btn btn-dark w-100 mt-3">Add Question</button>
-                <p class="text-danger mt-3" v-if="errorMessage">{{ errorMessage }}</p>
-            </form>
+            <div v-else class="container"> 
+                <h2 class="text-center">Add Question to {{ quiz.name }}({{ quiz.chapter_name }})</h2>
+                <form @submit.prevent="createNewQuestion">
+                    <div class="form-group">
+                        <label for="question">Question</label>
+                        <textarea type="text" class="form-control" id="question" minlength="6" v-model="new_question.question" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="option_a">Option A</label>
+                        <textarea type="text" class="form-control" id="option_a" v-model="new_question.option_a" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="option_b">Option B</label>
+                        <textarea type="text" class="form-control" id="option_b" v-model="new_question.option_b" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="option_c">Option C</label>
+                        <textarea type="text" class="form-control" id="option_c" v-model="new_question.option_c" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="option_d">Option D</label>
+                        <textarea type="text" class="form-control" id="option_d" v-model="new_question.option_d" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="correct_option">Select correct option</label>
+                        <select id="correct_option" v-model="new_question.correct_option" class="form-select">
+                            <option value="option_a">Option A</option>
+                            <option value="option_b">Option B</option>
+                            <option value="option_c">Option C</option>
+                            <option value="option_d">Option D</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mark">Mark for the question</label>
+                        <input type="number" class="form-control" min="1" id="mark" v-model="new_question.mark" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz_id">Quiz Name</label>
+                        <input type="text" class="form-control" id="quiz_id" :placeholder="quiz.name" v-model="quiz_name" disabled>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 mt-3">Add Question</button>
+                    <p class="text-danger mt-3" v-if="errorMessage">{{ errorMessage }}</p>
+                </form>
+                <button type="submit" @click="goBack" class="btn btn-dark w-100 mt-3">Go Back</button>
+            </div>
         </div>
     </div>
 </template>
@@ -80,6 +83,9 @@ import AdminNavbar from './AdminNavbar.vue';
             }
         },
         methods: {
+            goBack() {
+                this.$router.push(`/quiz/${this.new_question.quiz_id}`)
+            },
             async fetchQuiz(){
                 try {
                     const response = await fetch(`/api/single/quiz/${this.$route.params.quiz_id}`,{
@@ -143,17 +149,22 @@ import AdminNavbar from './AdminNavbar.vue';
 
 <style scoped>
 .mainContainer {
-    background: linear-gradient(to bottom, rgb(5, 33, 49) 65%, white 50%);
-    min-height: 100vh;
-    padding-bottom: 20px;
+    background: linear-gradient(to bottom, rgb(5, 33, 49) 50%, white 50%);
+    height: 160vh;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
 .container {
     background: rgb(136, 184, 199);
-    padding: 2rem;
+    padding: 3rem;
     border-radius: 10px;
     width: 600px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    margin: 40px auto;
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 10%;
+    margin-top: 10%;
 }
 form label {
     font-size: 16px;
@@ -181,8 +192,8 @@ form button:hover {
     flex-direction: column;
     align-items: center; /* Center horizontally */
     justify-content: center;
-    margin-top:50px;
-    color: wheat;
+    
+    color: rgb(164, 120, 37);
     text-decoration: none !important;
 }
 img {

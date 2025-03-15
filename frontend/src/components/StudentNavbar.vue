@@ -47,5 +47,6 @@ export default {
 .custom-link {
   text-decoration: none;
   color: inherit;
+  font-size: 24px;
 }
 </style>

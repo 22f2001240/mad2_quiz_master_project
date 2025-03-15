@@ -19,7 +19,7 @@
         <!-- container for quizzes -->
         <div class="container2">
             <h1 class="text-center">Quizzes</h1><br>
-            <div class="row row-cols-1 row-cols-md-4 g-2 ">
+            <div class="row row-cols-1 row-cols-md-5 g-2 ">
                 <div v-for="quiz in quizzes" :key="quiz.id" class="col d-flex align-items-stretch ">
                     <div class="card d-flex flex-column ">
                         <router-link :to="'/quiz/'+quiz.id">

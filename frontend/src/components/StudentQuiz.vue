@@ -332,7 +332,7 @@ h2{
 
 .container3 {
   margin-top: 20px;
-  margin-left:500px;
+  margin-left:1125px;
   padding: 5px;
   background-color: #f0f0f0; /* Light gray background */
   border: 1px solid #ccc;
@@ -343,12 +343,13 @@ h2{
   font-weight: bold;
 }
 .container4 {
-  margin: 20px;
+  margin-left: 20px;
+  margin-right:20px;
   padding: 5px;
   background-color: #f0f0f0; /* Light gray background */
   border: 1px solid #ccc;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  width: 1025px ; 
+   
   height: fit-content;
   font-size: 19px;
 }
@@ -357,7 +358,6 @@ h2{
   padding: 5px;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  width: 1025px ; 
   height: fit-content;
   font-size: 19px;
   border-radius: 5px;

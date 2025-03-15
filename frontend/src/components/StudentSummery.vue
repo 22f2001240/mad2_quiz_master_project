@@ -3,18 +3,18 @@
         <student-navbar/>
         <div class="chart-container">
             <div class="chart-item bar-chart">
-                <h2 class="text-center">Subject Wise no. of  Quizzes</h2><br>
+                <h2 class="text-center">Subject Wise No. of  Quizzes</h2><br>
                 <p v-if="errorMessageBar" style="color: red;font-size: 20px;">{{ errorMessageBar }}</p>
                 <canvas v-else ref="barChart"></canvas>
             </div>
             <div class="chart-item pie-chart">
-                <h2 class="text-center">Subject Wise no. of  Quizzes Attempted</h2><br>
+                <h2 class="text-center">Subject Wise No. of  Quizzes Attempted</h2><br>
                 <p v-if="errorMessagePie" style="color: red;font-size: 20px;">{{ errorMessagePie }}</p>
                 <canvas v-else ref="pieChart"></canvas>
             </div>
         </div>
     </div>
-  </template>
+</template>
   
 <script>
 import { Chart, registerables } from 'chart.js';

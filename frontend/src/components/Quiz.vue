@@ -30,7 +30,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text" v-if="quiz.num_questions < 10">⛔ Not fit for quiz. {{10- quiz.num_questions }} more questions are required!</p>
+                    <p class="card-text" v-if="quiz.num_questions < 5">⛔ Not fit for quiz. {{5- quiz.num_questions }} more questions are required!</p>
                     <p class="card-text" v-else>✅fit for quiz. </p>
                 </div>
             </div>

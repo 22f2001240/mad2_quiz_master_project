@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <admin-navbar/>
         <div class="mainContainer">
             <div v-if="updated" class="updated">
@@ -50,6 +50,7 @@
                     <button type="submit" >Update</button>
                     <p class="text-danger mt-3" style="font-size: 20px" v-if="errorMessage" >{{ errorMessage }}</p>
                 </form>
+                <button class="gobackbutton" type="submit" @click="goBack" >Go Back</button>
             </div>
         </div>
     </div>
@@ -68,6 +69,9 @@ export default {
         }
     },
     methods : {
+        goBack() {
+            this.$router.push(`/chapter/${this.quiz.chapter_id}`)
+        },
         async updateQuiz(id) {
             try {
                 const response = await fetch(`/api/quiz/${id}`,{
@@ -93,6 +97,7 @@ export default {
             this.updated = false
         },
         async fetchQuiz() {
+            this.errorMessage= ''
             try {
                 const response = await fetch(`/api/single/quiz/${this.$route.params.quiz_id}`,{
                     method : 'GET',
@@ -121,7 +126,7 @@ export default {
 <style scoped>
 .mainContainer {
     background: linear-gradient(to bottom, rgb(5, 33, 49) 50%, white 50%);
-    height: 100vh;
+    height: 120vh;
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
@@ -134,6 +139,8 @@ export default {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     font-weight: bold;
     font-size: 25px;
+    margin-bottom: 20%;
+    margin-top: 20%;
 }
 form label{
     font-size: 18px;
@@ -160,6 +167,21 @@ form label{
   }
   
   form button:hover {
+    background: #313131;
+    transform: scale(1.05); 
+    transition: transform 0.3s ease-in-out;
+  }
+.gobackbutton {
+    width: 100%;
+    padding: 0.5rem;
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+}
+.gobackbutton:hover {
     background: #313131;
     transform: scale(1.05); 
     transition: transform 0.3s ease-in-out;

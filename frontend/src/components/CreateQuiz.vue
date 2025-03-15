@@ -51,6 +51,7 @@
                 <button type="submit" class="btn btn-dark w-100 mt-3">Add</button>
                 <p class="text-danger mt-3" v-if="errorMessage">{{ errorMessage }}</p>
             </form>
+            <button type="submit" @click="goBack" class="btn btn-dark w-100 mt-3">Go Back</button>
         </div>
     </div>
 </template>
@@ -75,6 +76,9 @@ export default {
         }  
     },
     methods : {
+        goBack() {
+            this.$router.push(`/chapter/${this.chapter_id}`)
+        },
         async createNewQuiz(){
             const payload = {
                 name : this.name,
@@ -145,7 +149,7 @@ form input, form select, form textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-form button {
+button {
     padding: 0.5rem;
     background: #000000;
     color: white;

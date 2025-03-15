@@ -4,13 +4,6 @@ from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
-# Association table for Many-to-Many relationship (user - subject)
-user_subject = db.Table(
-    'user_subject',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key = True),
-    db.Column('subject_id', db.Integer, db.ForeignKey('subject.id'), primary_key = True)
-)
-
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer,primary_key = True)
@@ -18,11 +11,9 @@ class User(db.Model):
     email = db.Column(db.String, unique = True, nullable = False)
     password = db.Column(db.String(20), nullable = False)
     name = db.Column(db.String(20), nullable = False)
-    qualification = db.Column(db.String(20), default = 'Beginner') #['Beginner', 'Intermediate', 'Advanced']
     dob = db.Column(db.Date)
     reminder_time = db.Column(db.Time, default = time(17, 0, 0)) #default time for sending reminders is 5 pm
     user_activity = db.relationship("UserActivity", backref = "user", cascade = "all, delete", lazy = True)
-    subjects = db.relationship("Subject", secondary = user_subject, backref = "users", lazy = True)
     scores = db.relationship("Scores", backref = "user", cascade = "all, delete", lazy = True)
     student_answers = db.relationship("StudentAnswer", backref = "user", cascade = "all, delete", lazy = True)
 #add option to upload image in all users, subjects, chapters
@@ -36,7 +27,6 @@ class User(db.Model):
             "num_of_attempts" : len([score.quiz.name for score in self.scores]),
             "attempted_quizzes" : [score.quiz.name for score in self.scores],
             "dob" : self.dob.isoformat(),
-            "subjects": [subject.name for subject in self.subjects],
             "reminder_time": self.reminder_time.isoformat()
         }
 
