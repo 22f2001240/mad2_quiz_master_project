@@ -37,7 +37,7 @@ class SignupAPI(Resource):
         required_fields = ['email', 'password', 'name']
         if not all(field in data and data[field] for field in required_fields):
             return {"message" : 'Bad request! All fields are required.'}, 400
-        email, password, name, qualification = data.get("email"), data.get("password"), data.get("name"), data.get("qualification")
+        email, password, name = data.get("email"), data.get("password"), data.get("name")
         #Backend validation 
         email_regex = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
         if not re.match(email_regex,email) :
@@ -65,7 +65,7 @@ class SignupAPI(Resource):
             subjects = Subject.query.filter(Subject.name.in_(subject_names)).all()
             if not subjects:
                 return {"message": "Invalid subjects provided!"}, 400
-        new_user = User(email = email, password = password, name = name, qualification = qualification, dob = dob, subjects=subjects, reminder_time = reminder_time)
+        new_user = User(email = email, password = password, name = name, dob = dob, reminder_time = reminder_time)
         db.session.add(new_user)
         db.session.commit()
         return {"message" : "User registered successfully", "user_id": new_user.id},201

@@ -116,7 +116,7 @@ export default {
                     method : 'GET',
                     headers : {
                         'Content-Type' : 'application/json',
-                        'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
+                        'Authorization' : `Bearer ${localStorage.getItem('userToken')}`
                     }
                 });
                 const result = await response.json()
@@ -135,7 +135,7 @@ export default {
                     method : 'GET',
                     headers : {
                         'Content-Type' : 'application/json',
-                        'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
+                        'Authorization' : `Bearer ${localStorage.getItem('userToken')}`
                     }
                 });
                 const result = await response.json()
@@ -154,7 +154,7 @@ export default {
                     method : 'GET',
                     headers : {
                         'Content-Type' : 'application/json',
-                        'Authorization' : `Bearer ${localStorage.getItem('adminToken')}`
+                        'Authorization' : `Bearer ${localStorage.getItem('userToken')}`
                     }
                 });
                 const result = await response.json()

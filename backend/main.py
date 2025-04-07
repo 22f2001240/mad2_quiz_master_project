@@ -48,7 +48,7 @@ app.app_context().push()
 def add_admin():
     admin = User.query.filter_by(role = "admin").first()
     if not admin:
-        admin = User(email = "admin@gmail.com", password = "admin", name = "admin", role = "admin",qualification = '' )
+        admin = User(email = "admin@gmail.com", password = "admin", name = "admin", role = "admin")
         db.session.add(admin)
         db.session.commit()
         return "Admin added successfully"
